@@ -29,7 +29,7 @@ const PatientData = ({ patient, removeAllPatientData }) => {
           </Text>
         </View>
         <View style={styles.buttonContainer}>
-          <Button
+        <Button
             icon="delete"
             mode="contained"
             onPress={() => setConfirmDeleteVisible(true)}

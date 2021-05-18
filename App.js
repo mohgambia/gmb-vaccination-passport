@@ -4,6 +4,7 @@ import SecretIdForm from "./src/components/SecretIdForm";
 import MainScreen from "./src/screens/MainScreen";
 import styles from "./src/styles/styles";
 import { Provider as PaperProvider } from "react-native-paper";
+import AppBar from "./src/components/AppBar";
 
 export default function App() {
   return (
@@ -16,7 +17,8 @@ export default function App() {
           paddingTop: "15%",
         }}
       >
-        <Text style={styles.h1}>The Gambia Health Wallet</Text>
+       
+        <AppBar></AppBar>
         <MainScreen></MainScreen>
       </View>
     </PaperProvider>
