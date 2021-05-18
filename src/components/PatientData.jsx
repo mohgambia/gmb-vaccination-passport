@@ -3,13 +3,14 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import common from "../styles/styles";
 import { Button, Card, Portal, Dialog, Text } from "react-native-paper";
 
-const PatientData = ({ patient }) => {
+const PatientData = ({ patient, removeAllPatientData }) => {
   const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
 
   const removeAllInformation = () => {
     console.log("removing all information");
-    
+
     setConfirmDeleteVisible(false);
+    removeAllPatientData();
   };
 
   return (
@@ -27,7 +28,7 @@ const PatientData = ({ patient }) => {
             {patient.firstName} {patient.middleName} {patient.lastName}
           </Text>
         </View>
-        <View style={common.centered}>
+        <View style={styles.buttonContainer}>
           <Button
             icon="delete"
             mode="contained"
@@ -69,9 +70,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap: "wrap",
+    marginLeft: "5%",
+    marginRight: "5%",
+    // marginBottom: "20pt"
   },
   element: {
     marginLeft: 20,
+  },
+  buttonContainer: {
+    position: "absolute",
+
+    marginTop: "90%",
   },
 });
 

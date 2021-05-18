@@ -7,6 +7,11 @@ import SecretIdForm from "../components/SecretIdForm";
 const MainScren = () => {
   const [patientData, setPatientData] = useState({});
 
+  const removeAllPatientData = () => {
+    AsyncStorage.removeItem("data");
+    setPatientData({});
+  };
+
   useEffect(() => {
     try {
       AsyncStorage.getItem("data").then((res) => {
@@ -20,9 +25,12 @@ const MainScren = () => {
   return (
     <View>
       {!patientData._id ? (
-        <SecretIdForm setPatientData={setPatientData}/>
+        <SecretIdForm setPatientData={setPatientData} />
       ) : (
-        <PatientData patient={patientData}></PatientData>
+        <PatientData
+          patient={patientData}
+          removeAllPatientData={removeAllPatientData}
+        ></PatientData>
       )}
     </View>
   );

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import SecretIdForm from "./src/components/SecretIdForm";
-import MainScren from "./src/screens/MainScren";
+import MainScreen from "./src/screens/MainScreen";
 import styles from "./src/styles/styles";
 import { Provider as PaperProvider } from "react-native-paper";
 
@@ -16,8 +16,8 @@ export default function App() {
           paddingTop: "15%",
         }}
       >
-        <Text style={styles.h1}>The Gambia Vaccination Passport</Text>
-        <MainScren></MainScren>
+        <Text style={styles.h1}>The Gambia Health Wallet</Text>
+        <MainScreen></MainScreen>
       </View>
     </PaperProvider>
   );
