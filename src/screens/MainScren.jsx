@@ -10,7 +10,6 @@ const MainScren = () => {
   useEffect(() => {
     try {
       AsyncStorage.getItem("data").then((res) => {
-        console.log("patient data", res);
         setPatientData(JSON.parse(res) || {});
       });
     } catch (err) {
@@ -21,7 +20,7 @@ const MainScren = () => {
   return (
     <View>
       {!patientData._id ? (
-        <SecretIdForm />
+        <SecretIdForm setPatientData={setPatientData}/>
       ) : (
         <PatientData patient={patientData}></PatientData>
       )}

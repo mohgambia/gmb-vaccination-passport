@@ -10,5 +10,8 @@ export default StyleSheet.create({
   h3: {
     fontSize: 12,
     fontWeight: "bold"
+  },
+  centered: {
+    textAlign: "center"
   }
 });
