@@ -1,18 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import common from "../styles/styles";
-import {
-  Button,
-  Card,
-  Portal,
-  Dialog,
-  Text,
-  List,
-  Surface,
-} from "react-native-paper";
+import { Button, Card, Portal, Dialog, Text } from "react-native-paper";
 import VaccinationCard from "./VaccinationCard";
 
-const PatientData = ({ patient, removeAllPatientData }) => {
+const PatientData = ({ patient, removeAllPatientData, navigation }) => {
   const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
 
   const removeAllInformation = () => {
@@ -48,7 +40,10 @@ const PatientData = ({ patient, removeAllPatientData }) => {
       <View style={styles.vaccinationContainer}>
         <Text style={common.h2}>Vaccinations:</Text>
         {patient.vaccination.map(
-          (i) => i.date && <VaccinationCard key={patient.date} patient={i}></VaccinationCard>
+          (i) =>
+            i.date && (
+              <VaccinationCard key={patient.date} patient={i}></VaccinationCard>
+            )
         )}
       </View>
       <View style={styles.buttonContainer}>
@@ -56,7 +51,7 @@ const PatientData = ({ patient, removeAllPatientData }) => {
           icon="qrcode"
           mode="outlined"
           compact
-          // onPress={() => setConfirmDeleteVisible(true)}
+          onPress={() => navigation.navigate("QRCodes")}
         >
           Show QRCodes
         </Button>

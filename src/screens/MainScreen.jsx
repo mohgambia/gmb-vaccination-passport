@@ -1,10 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
-import { View , Text} from "react-native";
+import { View, Text } from "react-native";
 import PatientData from "../components/PatientData";
 import SecretIdForm from "../components/SecretIdForm";
 
-const MainScren = () => {
+const MainScren = ({ navigation }) => {
   const [patientData, setPatientData] = useState({});
 
   const removeAllPatientData = () => {
@@ -30,6 +30,7 @@ const MainScren = () => {
         <PatientData
           patient={patientData}
           removeAllPatientData={removeAllPatientData}
+          navigation={navigation}
         ></PatientData>
       )}
     </View>
