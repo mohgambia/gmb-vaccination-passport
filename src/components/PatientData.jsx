@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import common from "../styles/styles";
-import { Button, Card, Portal, Dialog, Text } from "react-native-paper";
+import {
+  Button,
+  Card,
+  Portal,
+  Dialog,
+  Text,
+  List,
+  Surface,
+} from "react-native-paper";
+import VaccinationCard from "./VaccinationCard";
 
 const PatientData = ({ patient, removeAllPatientData }) => {
   const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
@@ -14,51 +23,73 @@ const PatientData = ({ patient, removeAllPatientData }) => {
   };
 
   return (
-    <Card>
+    <Card style={styles.patientDataCard}>
       <View style={styles.container}>
-        <View styles={styles.element}>
+        <View style={styles.element}>
           <Text>Name</Text>
           <Text style={common.h3}>
             {patient.firstName} {patient.middleName} {patient.lastName}
           </Text>
         </View>
-        <View>
-          <Text>Name</Text>
-          <Text style={common.h3}>
-            {patient.firstName} {patient.middleName} {patient.lastName}
-          </Text>
+        <View style={styles.element}>
+          <Text>NIN</Text>
+          <Text style={common.h3}>{patient.NIN}</Text>
         </View>
-        <View style={styles.buttonContainer}>
-        <Button
-            icon="delete"
-            mode="contained"
-            onPress={() => setConfirmDeleteVisible(true)}
-          >
-            Remove all information
-          </Button>
-          <Portal>
-            <Dialog
-              visible={confirmDeleteVisible}
-              onDismiss={() => setConfirmDeleteVisible(false)}
-            >
-              <Dialog.Title>Warning!!!</Dialog.Title>
+        <View style={styles.element}>
+          <Text>Vaccine Register Number</Text>
+          <Text style={common.h3}>{patient.patientVaccineRegisterNumber}</Text>
+        </View>
+        <View style={styles.element}>
+          <Text>Date of Birth</Text>
+          <Text style={common.h3}>{patient.dateOfBirth}</Text>
+        </View>
+      </View>
 
-              <Dialog.Content>
-                <Text>
-                  This action can not be undone. To retrieve the data again you
-                  will need your secretId again, or the QR code.
-                </Text>
-                <Text>Are you sure to delete all information?</Text>
-              </Dialog.Content>
-              <Dialog.Actions>
-                <Button onPress={() => setConfirmDeleteVisible(false)}>
-                  Cancel
-                </Button>
-                <Button onPress={removeAllInformation}>Ok</Button>
-              </Dialog.Actions>
-            </Dialog>
-          </Portal>
-        </View>
+      <View style={styles.vaccinationContainer}>
+        <Text style={common.h2}>Vaccinations:</Text>
+        {patient.vaccination.map(
+          (i) => i.date && <VaccinationCard key={patient.date} patient={i}></VaccinationCard>
+        )}
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          icon="qrcode"
+          mode="outlined"
+          compact
+          // onPress={() => setConfirmDeleteVisible(true)}
+        >
+          Show QRCodes
+        </Button>
+        <Button
+          icon="delete"
+          mode="outlined"
+          compact
+          onPress={() => setConfirmDeleteVisible(true)}
+        >
+          Remove all information
+        </Button>
+
+        <Portal>
+          <Dialog
+            visible={confirmDeleteVisible}
+            onDismiss={() => setConfirmDeleteVisible(false)}
+          >
+            <Dialog.Title>Warning!!!</Dialog.Title>
+            <Dialog.Content>
+              <Text>
+                This action can not be undone. To retrieve the data again you
+                will need your secretId again, or the QR code.
+              </Text>
+              <Text>Are you sure to delete all information?</Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => setConfirmDeleteVisible(false)}>
+                Cancel
+              </Button>
+              <Button onPress={removeAllInformation}>Ok</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </View>
     </Card>
   );
@@ -66,21 +97,35 @@ const PatientData = ({ patient, removeAllPatientData }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap: "wrap",
     marginLeft: "5%",
     marginRight: "5%",
-    // marginBottom: "20pt"
+    marginTop: "5%",
+  },
+  patientDataCard: {
+    height: "100%",
   },
   element: {
-    marginLeft: 20,
+    flex: 1,
+    minWidth: "40%",
+    marginBottom: 15,
   },
   buttonContainer: {
     position: "absolute",
-
-    marginTop: "90%",
+    bottom: 20,
+    justifyContent: "center",
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  vaccinationContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    marginLeft: "5%",
+    marginRight: "5%",
+    marginTop: "5%",
+    // marginBottom: "20pt"
   },
 });
 
