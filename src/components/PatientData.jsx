@@ -3,8 +3,14 @@ import { StyleSheet, View } from "react-native";
 import common from "../styles/styles";
 import { Button, Card, Portal, Dialog, Text } from "react-native-paper";
 import VaccinationCard from "./VaccinationCard";
+import { retrieveData } from "../services/syncdata";
 
-const PatientData = ({ patient, removeAllPatientData, navigation }) => {
+const PatientData = ({
+  patient,
+  removeAllPatientData,
+  navigation,
+  setPatientData,
+}) => {
   const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
 
   const removeAllInformation = () => {
@@ -47,6 +53,14 @@ const PatientData = ({ patient, removeAllPatientData, navigation }) => {
         )}
       </View>
       <View style={styles.buttonContainer}>
+        <Button
+          icon="sync"
+          mode="outlined"
+          compact
+          onPress={() => retrieveData(patient._id, setPatientData)}
+        >
+          Refresh Data
+        </Button>
         <Button
           icon="qrcode"
           mode="outlined"

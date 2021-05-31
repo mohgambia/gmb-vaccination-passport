@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Button, View, TextInput, Text, StyleSheet } from "react-native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { TextInput } from "react-native-paper";
+import { View, Text, StyleSheet } from "react-native";
+import { TextInput, Button } from "react-native-paper";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { retrieveData } from "../services/syncdata";
 
 const SecretIdForm = ({ setPatientData }) => {
   const [secretId, setSecretId] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [scanning, setScanning] = useState(false);
+  const [error, setError] = useState("");
 
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
     setSecretId(data);
-    retrieveData(data);
+    retrieveData(data, setPatientData);
   };
 
   const handleScanBarcode = async () => {
@@ -25,49 +25,58 @@ const SecretIdForm = ({ setPatientData }) => {
     if (hasPermission) setScanning(true);
   };
 
-  const retrieveData = async (patientId) => {
-    console.log("retrieving data", patientId);
-    console.log(
-      "going to axios",
-      `https://draman.iprocuratio.com/api/patients/${patientId}`
-    );
-    const res = await axios
-      .get(`https://draman.iprocuratio.com/api/patients/${patientId}`)
-      .catch((err) => console.error("error", err));
-    console.log("retrieved data", res.data);
-    await AsyncStorage.setItem("secretId", patientId);
-    await AsyncStorage.setItem("data", res ? JSON.stringify(res.data) : null);
-    setPatientData(res.data);
-
-    console.log("all keys", await AsyncStorage.getAllKeys());
-  };
-
   return (
     <View>
-      <View>
+      <View style={styles.container}>
+        <Text style={{ textAlign: "center" }}>
+          Introduce your Secret Id or SCAN QR Code
+        </Text>
         <TextInput
-          placeholder="Introduce your Secret ID or Scan QR Code"
+          placeholder="Secret Id"
           value={secretId}
+          mode="outlined"
           onChangeText={(text) => setSecretId(text)}
         />
         <Button
+          style={styles.button}
           disabled={!secretId}
-          title="Submit"
+          mode="outlined"
           onPress={() => {
-            retrieveData(secretId);
+            retrieveData(secretId, setPatientData);
           }}
-        />
+        >
+          Submit
+        </Button>
+        <Button
+          style={styles.button}
+          disabled={!secretId}
+          mode="outlined"
+          color="red"
+          onPress={() => {
+            setScanned(false);
+            setSecretId("");
+          }}
+        >
+          Reset
+        </Button>
         {!scanning && (
-          <Button title="SCAN QR CODE" onPress={handleScanBarcode} />
+          <Button
+            style={styles.button}
+            icon="qrcode"
+            mode="outlined"
+            onPress={handleScanBarcode}
+          >
+            SCAN QR CODE
+          </Button>
         )}
       </View>
       {scanning && (
-        <View style={styles.container}>
+        <View style={styles.qrContainer}>
           <BarCodeScanner
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={StyleSheet.absoluteFillObject}
           />
-          <Button title="Cancel Scan" onPress={() => setScanning(false)} />
+          <Button onPress={() => setScanning(false)}>Stop Scanning</Button>
         </View>
       )}
     </View>
@@ -75,11 +84,19 @@ const SecretIdForm = ({ setPatientData }) => {
 };
 
 const styles = StyleSheet.create({
+  qrContainer: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    height: "100%",
+  },
   container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    maxHeight: 400,
+    backgroundColor: "white",
+    height: "100%",
+    paddingHorizontal: 20,
+  },
+  button: {
+    marginVertical: 15,
   },
 });
 

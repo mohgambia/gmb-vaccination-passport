@@ -31,6 +31,7 @@ const MainScren = ({ navigation }) => {
           patient={patientData}
           removeAllPatientData={removeAllPatientData}
           navigation={navigation}
+          setPatientData={setPatientData}
         ></PatientData>
       )}
     </View>
