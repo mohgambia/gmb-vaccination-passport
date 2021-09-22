@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.4",
+    "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
@@ -15,6 +16,7 @@
     "react-native-qrcode": "^0.2.7",
     "react-native-qrcode-svg": "^6.1.1",
     "react-native-reanimated": "~1.13.0",
+    "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
     "react-native-svg": "^12.1.1",
