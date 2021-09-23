@@ -36,7 +36,18 @@ const SecretIdForm = ({ setPatientData }) => {
     })();
     if (hasPermission) setScanning(true);
   };
+  function formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+  let dateFormat = formatDate(date);
   return (
     <View>
       <Text
@@ -143,7 +154,7 @@ const SecretIdForm = ({ setPatientData }) => {
         >
           <Button
             style={styles.button}
-            disabled={!secretId}
+            disabled={!secretId && !name && !lastName}
             mode="outlined"
             color="red"
             onPress={() => {
@@ -155,10 +166,16 @@ const SecretIdForm = ({ setPatientData }) => {
           </Button>
           <Button
             style={styles.button}
-            disabled={!secretId}
+            disabled={!secretId && !name && !lastName}
             mode="outlined"
             onPress={() => {
-              retrieveData(secretId, setPatientData);
+              retrieveData(
+                secretId,
+                setPatientData,
+                dateFormat,
+                name,
+                lastName
+              );
             }}
           >
             Submit
