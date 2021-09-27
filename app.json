@@ -1,0 +1,16 @@
+{
+    "expo": {
+     "name": "The Gambia Vaccination Credentials",
+     "icon": "./assets/app.png",
+     "version": "1.0.0",
+     "slug": "gambia-vaccination-credentials",
+     "ios": {
+       "bundleIdentifier": "com.afoone.gambiavaccination",
+       "buildNumber": "1.0.0"
+     },
+     "android": {
+       "package": "com.afoone.gambiavaccination",
+       "versionCode": 1
+     }
+    }
+  }
