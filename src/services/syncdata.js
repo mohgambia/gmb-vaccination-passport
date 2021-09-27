@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const retrieveData = async (patientId, callback,date, name, lastName) => {
-  let link = !patientId ? `http://draman.iprocuratio.com/api/patients/checkPatient?firstName=${name}&lastName=${lastName}&birthDate=${date}` : `https://draman.iprocuratio.com/api/patients/${patientId}`
+  let link = !patientId ? `https://covid19.crvs.gm/api/patients/checkPatient?firstName=${name}&lastName=${lastName}&birthDate=${date}` : `https://covid19.crvs.gm/api/patients/${patientId}`
   const res = await axios
     .get(link)
     .catch((err) => {
