@@ -7,9 +7,9 @@ const VaccinationCard = ({ patient }) => {
     <Surface style={styles.vaccinationItem}>
       <Button icon="eyedropper" />
       <View>
-        <Text style={styles.vaccinationText}>{`Date: ${new Date(
+        <Text style={styles.vaccinationText}>{`Date: ${patient.date ? new Date(
           patient.date
-        ).toLocaleDateString()}`}</Text>
+        ).toLocaleDateString(): "not registered"}`}</Text>
         <Text
           style={styles.vaccinationText}
         >{`Vaccine: ${patient.nameOfTheVaccine}`}</Text>

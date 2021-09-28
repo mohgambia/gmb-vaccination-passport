@@ -20,6 +20,8 @@ const PatientData = ({
     removeAllPatientData();
   };
 
+  const dateOfBirth = new Date(patient.dateOfBirth)
+
   return (
     <Card style={styles.patientDataCard}>
       <View style={styles.container}>
@@ -27,6 +29,12 @@ const PatientData = ({
           <Text>Name</Text>
           <Text style={common.h3}>
             {patient.firstName} {patient.middleName} {patient.lastName}
+          </Text>
+        </View>
+        <View style={styles.element}>
+          <Text>Nationality</Text>
+          <Text style={common.h3}>
+            {patient.nationality}
           </Text>
         </View>
         <View style={styles.element}>
@@ -39,7 +47,7 @@ const PatientData = ({
         </View>
         <View style={styles.element}>
           <Text>Date of Birth</Text>
-          <Text style={common.h3}>{patient.dateOfBirth}</Text>
+          <Text style={common.h3}>{dateOfBirth?.toLocaleDateString()}</Text>
         </View>
       </View>
 
@@ -47,9 +55,9 @@ const PatientData = ({
         <Text style={common.h2}>Vaccinations:</Text>
         {patient.vaccination.map(
           (i) =>
-            i.date && (
+           (i.date || i.nameOfTheVaccine || i.batchNumber) &&
               <VaccinationCard key={patient.date} patient={i}></VaccinationCard>
-            )
+            
         )}
       </View>
       <View style={styles.buttonContainer}>
