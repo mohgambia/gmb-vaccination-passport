@@ -123,7 +123,7 @@ const SecretIdForm = ({ setPatientData }) => {
             <DateTimePicker
               testID="dateTimePicker"
               value={date}
-              is24Hour={true}
+              is24Hour={false}
               display="default"
               dateFormat="day month year"
               timeZoneOffsetInMinutes={60}
@@ -154,11 +154,11 @@ const SecretIdForm = ({ setPatientData }) => {
         </View>
         <View
           style={{
-            zIndex: "1000",
+            zIndex: 1000,
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-evenly",
-            position: "fixed",
+            // position: "fixed",
             top: hp("5%"),
             size: hp("10%"),
           }}
