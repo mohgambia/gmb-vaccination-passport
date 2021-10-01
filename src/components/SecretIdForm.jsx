@@ -3,11 +3,19 @@ import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, Button, Avatar } from 'react-native-paper';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { retrieveData } from '../services/syncdata';
-
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
+let validationSchemaData = yup.object().shape({
+  dayData: yup.number().min(1).max(31),
+  monthData: yup.number().min(1).max(12),
+  yearData: yup.number().min(1900).max(2021),
+});
+
 const SecretIdForm = ({ setPatientData }) => {
   const [secretId, setSecretId] = useState('');
   const [name, setName] = useState('');
@@ -20,7 +28,9 @@ const SecretIdForm = ({ setPatientData }) => {
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState('');
   const [date, setDate] = useState(new Date());
-
+  console.log('dayData', dayData);
+  console.log('monthData', monthData);
+  console.log('yearData', yearData);
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
     setSecretId(data);
@@ -52,179 +62,232 @@ const SecretIdForm = ({ setPatientData }) => {
   }
 
   let dateFormat = `${yearData}-${monthData}-${dayData}`;
+  //necesito poner aca values.yearData cada uno pero no esta el valor
 
   return (
-    <View>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontSize: 13,
-          backgroundColor: 'white',
-        }}
-      >
-        Introduce one of the following items:
-      </Text>
-      <View style={styles.container}>
-        <TextInput
-          placeholder="Secret Id"
-          value={secretId}
-          mode="outlined"
-          onChangeText={(text) => setSecretId(text)}
-          style={{ marginTop: hp('3%') }}
-        />
-        <Avatar.Icon
-          color="white"
-          icon="chevron-down"
-          size={30}
-          style={{
-            position: 'relative',
-            left: hp('20%'),
-            marginTop: wp('2%'),
-          }}
-        />
-        {!scanning && (
-          <Button
-            style={styles.button}
-            icon="qrcode"
-            mode="outlined"
-            onPress={handleScanBarcode}
+    <Formik
+      initialValues={{ dayData: '', monthData: '', yearData: '' }}
+      validateOnMount={true}
+      onSubmit={(values) => console.log(values)}
+      validationSchema={validationSchemaData}
+    >
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        touched,
+        errors,
+        isValid,
+      }) => (
+        <View>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 13,
+              backgroundColor: 'white',
+            }}
           >
-            SCAN QR CODE
-          </Button>
-        )}
-        <Avatar.Icon
-          color="white"
-          icon="chevron-down"
-          size={30}
-          style={{
-            position: 'relative',
-            left: hp('20%'),
-            marginTop: hp('2%'),
-          }}
-        />
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}
-        >
-          <View>
-            <Text
+            Introduce one of the following items:
+          </Text>
+          <View style={styles.container}>
+            <TextInput
+              placeholder="Secret Id"
+              value={secretId}
+              mode="outlined"
+              onChangeText={(text) => setSecretId(text)}
+              style={{ marginTop: hp('3%') }}
+            />
+            <Avatar.Icon
+              color="white"
+              icon="chevron-down"
+              size={30}
               style={{
-                display: 'flex',
-                textAlign: 'center',
-                marginTop: hp('3%'),
+                position: 'relative',
+                left: hp('20%'),
+                marginTop: wp('2%'),
               }}
-            >
-              Date of Birth
-            </Text>
+            />
+            {!scanning && (
+              <Button
+                style={styles.button}
+                icon="qrcode"
+                mode="outlined"
+                onPress={handleScanBarcode}
+              >
+                SCAN QR CODE
+              </Button>
+            )}
+            <Avatar.Icon
+              color="white"
+              icon="chevron-down"
+              size={30}
+              style={{
+                position: 'relative',
+                left: hp('20%'),
+                marginTop: hp('2%'),
+              }}
+            />
             <View
               style={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 justifyContent: 'space-between',
               }}
             >
+              <View>
+                <Text
+                  style={{
+                    display: 'flex',
+                    textAlign: 'center',
+                    marginTop: hp('3%'),
+                  }}
+                >
+                  Date of Birth
+                </Text>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  {console.log('values', values)}
+                  <TextInput
+                    onChangeText={handleChange('dayData')}
+                    onBlur={handleBlur('dayData')}
+                    value={values.dayData}
+                    placeholder="Day"
+                    mode="outlined"
+                    // onChangeText={(text) => setDay(text)}
+                  />
+                  {/* {errors.dayData && touched.dayData && (
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: 'red',
+                        fontWeight: 'bold',
+                        marginTop: 5,
+                      }}
+                    >
+                      {errors.dayData}
+                    </Text>
+                  )} */}
+                  <TextInput
+                    onChangeText={handleChange('monthData')}
+                    onBlur={handleBlur('monthData')}
+                    value={values.monthData}
+                    placeholder="Month"
+                    mode="outlined"
+                    // onChangeText={(text) =>
+                    //  setMonth(text)
+                    // }
+                  />
+                  <TextInput
+                    onChangeText={handleChange('yearData')}
+                    onBlur={handleBlur('yearData')}
+                    value={values.yearData}
+                    placeholder="Year"
+                    mode="outlined"
+                    // onChangeText={(text) => setYear(text)}
+                  />
+                </View>
+                {console.log('errors', errors)}
+                {errors.dayData && (
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: 'red',
+                      fontWeight: 'bold',
+                      marginTop: 5,
+                    }}
+                  >
+                    {errors.dayData}
+                  </Text>
+                )}
+              </View>
+
               <TextInput
-                placeholder="Day"
-                value={dayData}
+                placeholder="Name"
+                value={name}
                 mode="outlined"
-                onChangeText={(text) => setDay(text)}
+                onChangeText={(text) => setName(text)}
               />
               <TextInput
-                placeholder="Month"
-                value={monthData}
+                placeholder="Last Name"
+                value={lastName}
                 mode="outlined"
-                onChangeText={(text) => setMonth(text)}
-              />
-              <TextInput
-                placeholder="Year"
-                value={yearData}
-                mode="outlined"
-                onChangeText={(text) => setYear(text)}
+                onChangeText={(text) => setLastName(text)}
               />
             </View>
+            <View
+              style={{
+                zIndex: 1000,
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                // position: "fixed",
+                top: hp('5%'),
+                size: hp('10%'),
+              }}
+            >
+              <Button
+                style={styles.button}
+                disabled={
+                  !secretId &&
+                  !name &&
+                  !lastName &&
+                  !dayData &&
+                  !monthData &&
+                  !yearData
+                }
+                mode="outlined"
+                color="red"
+                onPress={() => {
+                  setScanned(false);
+                  setSecretId('');
+                }}
+              >
+                Reset
+              </Button>
+              <Button
+                style={styles.button}
+                disabled={
+                  !secretId &&
+                  !name &&
+                  !lastName &&
+                  !dayData &&
+                  !monthData &&
+                  !yearData
+                }
+                mode="outlined"
+                type="submit"
+                onPress={() => {
+                  retrieveData(
+                    secretId,
+                    setPatientData,
+                    dateFormat,
+                    name,
+                    lastName
+                  );
+                }}
+              >
+                Submit
+              </Button>
+            </View>
           </View>
-
-          <TextInput
-            placeholder="Name"
-            value={name}
-            mode="outlined"
-            onChangeText={(text) => setName(text)}
-          />
-          <TextInput
-            placeholder="Last Name"
-            value={lastName}
-            mode="outlined"
-            onChangeText={(text) => setLastName(text)}
-          />
-        </View>
-        <View
-          style={{
-            zIndex: 1000,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            // position: "fixed",
-            top: hp('5%'),
-            size: hp('10%'),
-          }}
-        >
-          <Button
-            style={styles.button}
-            disabled={
-              !secretId &&
-              !name &&
-              !lastName &&
-              !dayData &&
-              !monthData &&
-              !yearData
-            }
-            mode="outlined"
-            color="red"
-            onPress={() => {
-              setScanned(false);
-              setSecretId('');
-            }}
-          >
-            Reset
-          </Button>
-          <Button
-            style={styles.button}
-            disabled={
-              !secretId &&
-              !name &&
-              !lastName &&
-              !dayData &&
-              !monthData &&
-              !yearData
-            }
-            mode="outlined"
-            onPress={() => {
-              retrieveData(
-                secretId,
-                setPatientData,
-                dateFormat,
-                name,
-                lastName
-              );
-            }}
-          >
-            Submit
-          </Button>
-        </View>
-      </View>
-      {scanning && (
-        <View style={styles.qrContainer}>
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={StyleSheet.absoluteFillObject}
-          />
-          <Button onPress={() => setScanning(false)}>Stop Scanning</Button>
+          {scanning && (
+            <View style={styles.qrContainer}>
+              <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={StyleSheet.absoluteFillObject}
+              />
+              <Button onPress={() => setScanning(false)}>Stop Scanning</Button>
+            </View>
+          )}
         </View>
       )}
-    </View>
+    </Formik>
   );
 };
 
