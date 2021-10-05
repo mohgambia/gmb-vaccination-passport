@@ -54,9 +54,9 @@ const PatientData = ({
       <View style={styles.vaccinationContainer}>
         <Text style={common.h2}>Vaccinations:</Text>
         {patient.vaccination.map(
-          (i) =>
+          (i, index) =>
            (i.date || i.nameOfTheVaccine || i.batchNumber) &&
-              <VaccinationCard key={patient.date} patient={i}></VaccinationCard>
+              <VaccinationCard key={index} patient={i}></VaccinationCard>
             
         )}
       </View>
