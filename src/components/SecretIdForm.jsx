@@ -26,7 +26,6 @@ const SecretIdForm = ({ setPatientData }) => {
   const [scanned, setScanned] = useState(false);
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState('');
-  const [date, setDate] = useState('');
 
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
@@ -41,19 +40,6 @@ const SecretIdForm = ({ setPatientData }) => {
     })();
     if (hasPermission) setScanning(true);
   };
-  function formatDate(date) {
-    var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
-
-  //necesito poner aca values.yearData cada uno pero no esta el valor
 
   return (
     <ScrollView>
@@ -67,7 +53,11 @@ const SecretIdForm = ({ setPatientData }) => {
           lastName: '',
         }}
         validateOnMount={true}
-        onSubmit={(values) => {
+        onSubmit={(values, asjd, asss) => {
+          console.log('VALUES', values);
+          console.log('VALUES1', asjd);
+          console.log('VALUES2', asss);
+
           retrieveData(
             values.secretId,
             setPatientData,
@@ -99,6 +89,7 @@ const SecretIdForm = ({ setPatientData }) => {
             >
               Introduce one of the following items:
             </Text>
+
             <View style={styles.container}>
               <TextInput
                 placeholder="Secret Id"
@@ -169,29 +160,14 @@ const SecretIdForm = ({ setPatientData }) => {
                       value={values.dayData}
                       placeholder="Day"
                       mode="outlined"
-                      // onChangeText={(text) => setDay(text)}
                     />
-                    {/* {errors.dayData && touched.dayData && (
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: 'red',
-                        fontWeight: 'bold',
-                        marginTop: 5,
-                      }}
-                    >
-                      {errors.dayData}
-                    </Text>
-                  )} */}
+
                     <TextInput
                       onChangeText={handleChange('monthData')}
                       onBlur={handleBlur('monthData')}
                       value={values.monthData}
                       placeholder="Month"
                       mode="outlined"
-                      // onChangeText={(text) =>
-                      //  setMonth(text)
-                      // }
                     />
                     <TextInput
                       onChangeText={handleChange('yearData')}
@@ -199,7 +175,6 @@ const SecretIdForm = ({ setPatientData }) => {
                       value={values.yearData}
                       placeholder="Year"
                       mode="outlined"
-                      // onChangeText={(text) => setYear(text)}
                     />
                   </View>
                   {Object.values(errors) && (
@@ -231,14 +206,26 @@ const SecretIdForm = ({ setPatientData }) => {
                   value={values.lastName}
                 />
               </View>
-
+              {(Object.keys(values).length !== 5 ||
+                Object.keys(values).length !== 6) && (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: 'red',
+                    fontWeight: 'bold',
+                    marginTop: 5,
+                  }}
+                >
+                  the data does not exist
+                </Text>
+              )}
               <View
                 style={{
                   zIndex: 1000,
                   display: 'flex',
                   flexDirection: 'row',
                   justifyContent: 'space-evenly',
-                  top: hp('5%'),
+                  top: hp(' 1%'),
                   size: hp('10%'),
                 }}
               >
@@ -275,7 +262,6 @@ const SecretIdForm = ({ setPatientData }) => {
                 >
                   Submit
                 </Button>
-                {/* <Button onPress={handleSubmit}>SUBMIT NEW</Button> */}
               </View>
             </View>
             {scanning && (

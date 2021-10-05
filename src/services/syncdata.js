@@ -16,10 +16,12 @@ export const retrieveData = async (
     : `https://covid19.crvs.gm/api/patients/${patientId}`;
 
   const res = await axios.get(link).catch((err) => {
-    console.error(err);
+    console.error(err, 'errrrrrr*****');
     setError("There was an error: " + err);
   });
   console.log("retrieved data", res.data);
+
+  
   await AsyncStorage.setItem("secretId", patientId);
   await AsyncStorage.setItem("data", res ? JSON.stringify(res.data) : null);
   callback && callback(res.data);
