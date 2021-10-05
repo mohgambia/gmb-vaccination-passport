@@ -216,7 +216,7 @@ const SecretIdForm = ({ setPatientData }) => {
                     marginTop: 5,
                   }}
                 >
-                  the data does not exist
+                  {error}
                 </Text>
               )}
               <View
