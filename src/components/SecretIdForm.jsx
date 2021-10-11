@@ -87,7 +87,7 @@ const SecretIdForm = ({ setPatientData }) => {
                 backgroundColor: 'white',
               }}
             >
-              Introduce one of the following items:
+              :
             </Text>
 
             <View style={styles.container}>

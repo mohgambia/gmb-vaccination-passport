@@ -7,7 +7,7 @@ const AppBar = () => {
     <Appbar >
       {/* <Appbar.Header><Text>Gambia</Text>  </Appbar.Header> */}
         {/* <Appbar.BackAction onPress={_goBack} /> */}
-        <Appbar.Content title="The Gambia Health Wallet" subtitle="" />
+        <Appbar.Content title="The Gambia Health Passport" subtitle="" />
         {/* <Appbar.Action icon="magnify" />
         <Appbar.Action icon="dots-vertical" /> */}
     

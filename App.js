@@ -17,7 +17,7 @@ export default function App() {
     <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={MainScreen}   options={{ title: 'The Gambia Health Wallet', animationEnabled: true }}></Stack.Screen>
+          <Stack.Screen name="Home" component={MainScreen}   options={{ title: 'The Gambia Health Passport', animationEnabled: true }}></Stack.Screen>
           <Stack.Screen name="QRCodes" component={QRCodes}   options={{ title: 'QRCodes', animationEnabled: true }}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>

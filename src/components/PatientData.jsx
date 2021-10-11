@@ -26,7 +26,7 @@ const PatientData = ({
     <Card style={styles.patientDataCard}>
       <View style={styles.container}>
         <View style={styles.element}>
-          <Text>Name</Text>
+          <Text>Full Name</Text>
           <Text style={common.h3}>
             {patient.firstName} {patient.middleName} {patient.lastName}
           </Text>
@@ -95,9 +95,9 @@ const PatientData = ({
             <Dialog.Content>
               <Text>
                 This action can not be undone. To retrieve the data again you
-                will need your secretId again, or the QR code.
+                will need to re-enter your secretId, or the QR code.
               </Text>
-              <Text>Are you sure to delete all information?</Text>
+              <Text>Are you sure you want to delete all information?</Text>
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={() => setConfirmDeleteVisible(false)}>

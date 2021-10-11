@@ -1,15 +1,15 @@
 {
     "expo": {
-     "name": "The Gambia Vaccination Credentials",
+     "name": "The Gambia Health Passport",
      "icon": "./assets/app.png",
      "version": "1.0.0",
-     "slug": "gambia-vaccination-credentials",
+     "slug": "gmb-health-pass",
      "ios": {
-       "bundleIdentifier": "com.afoone.gambiavaccination",
+       "bundleIdentifier": "com.mohgm.healthpass",
        "buildNumber": "1.0.0"
      },
      "android": {
-       "package": "com.afoone.gambiavaccination",
+       "package": "com.mohgm.healthpass",
        "versionCode": 1
      }
     }
