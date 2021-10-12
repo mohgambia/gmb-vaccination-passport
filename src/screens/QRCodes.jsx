@@ -37,7 +37,7 @@ const QRCodes = () => {
           )}
         </View>
         <Text style={styles.subtitle}>
-          Please visit the URL below to validate the data:
+          Please scan the QRCode below and visit the embedded URL to verify the data:
         </Text>
         <View style={styles.code}>
           {patient._id && (
