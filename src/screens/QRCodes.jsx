@@ -42,7 +42,7 @@ const QRCodes = () => {
         <View style={styles.code}>
           {patient._id && (
             <QRCode
-              value={`https://covid19.crvs.gm.com/api/patients/${patient._id}`}
+              value={`https://covid19.crvs.gm/api/patients/${patient._id}`}
               logo={{ uri: base64Logo }}
               size={300}
               logoSize={30}
