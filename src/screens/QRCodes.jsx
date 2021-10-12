@@ -23,7 +23,7 @@ const QRCodes = () => {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.subtitle}>
-          Patient ID Code (For retrieval of the ID from 3rd party apps)
+          Patient ID Code (for getting the ID from 3rd party apps)
         </Text>
         <View style={styles.code}>
           {patient._id && (
@@ -37,12 +37,12 @@ const QRCodes = () => {
           )}
         </View>
         <Text style={styles.subtitle}>
-          Please visit the URL embedded in the QRCode below to validate the data:
+          Please visit the URL below to validate the data:
         </Text>
         <View style={styles.code}>
           {patient._id && (
             <QRCode
-              value={`https://covid19.crvs.gm/api/patients/${patient._id}`}
+              value={`https://covid19.crvs.gm.com/api/patients/${patient._id}`}
               logo={{ uri: base64Logo }}
               size={300}
               logoSize={30}
